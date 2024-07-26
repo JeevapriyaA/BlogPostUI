@@ -1,60 +1,46 @@
 
-<div class="container mt-4">
-  <h2>Blog Post Lists</h2>
-  <br />
+<div class="wrapper">
   <div class="row">
-    <div class="col-md-2">
-      <button class="btn btn-primary" (click)="openModal(0)">Add</button>
+    <div class="col-md-10">
+      <header class="header">
+        <h1>Blog Post List</h1>
+      </header>
     </div>
+    <div class="col-md-2"> <button class="btn btn-primary" (click)="openModal(0)">Add</button></div>
+
   </div>
   <br />
-  <div class="row border-opacity-100" style="border:1px solid" *ngFor="let blog of blogList">
-    <div class="col">
-      <div class="list-group">
-        <div>
-          <p class="mb-1 text-center" style="height:100px">{{blog.text}}</p>
+  <table class="table">
+    <thead>
 
-          <div class="row">
-            <div class="col-md-10" style="padding-top: 11px;">
-              <h6 class="mb-1">
-                Created : {{blog.userName}} &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; Created Date : {{blog.dateCreated | date:'medium'}}
-              </h6>
-            </div>
-            <div class="col-md-1 align-content-end">
-              <button class="btn btn-primary " (click)="openModal(blog.id)">Edit</button>
-            </div>
-            <div class="col-md-1">
-              <button class="btn btn-primary" id="Delete_{{blog.id}} " (click)="confirmDelete(blog.id)">Delete</button>
-            </div>
-          </div>
-          <br />
-        </div>
-      </div>
-
-    </div>
-    <br />
-  </div>
-
+      <tr>
+        <th>User Name</th>
+        <th class="text-center">Text</th>
+        <th>Created Date</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="blogList.length==0">
+        No Record Found
+      </tr>
+      <tr *ngFor="let blog of blogList">
+        <td class="username">{{blog.userName}}</td>
+        <td class="text" width="40%">{{blog.text}}</td>
+        <td class="created-date">{{blog.dateCreated | date:'medium'}}</td>
+        <td class="text-center">
+          <button class="edit-btn" (click)="openModal(blog.id)">Edit</button>
+          <button class="delete-btn" id="Delete_{{blog.id}} " (click)="confirmDelete(blog.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<!--<div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="blogModalLabel">Create Post</h5>
-      </div>
-      <div class="modal-body">
-        <app-createblogpost *ngIf="this.blogId==0" (closePopup)="closeModal()"></app-createblogpost>
-        <app-editblogpost *ngIf="this.blogId>0" [blogId]="blogId" (closePopup)="closeModal()"></app-editblogpost>
-      </div>
-    </div>
-  </div>
-</div>-->
-<!--<button type="button" class="btn btn-info btn-lg" (click)="openModasl()">click to open</button>-->
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Manage Post</h4>       
+        <h4 class="modal-title">Manage Post</h4>
       </div>
       <div class="modal-body">
         <app-createblogpost *ngIf="this.blogId==0" (closePopup)="closeModal()"></app-createblogpost>
